@@ -1,8 +1,8 @@
-%global commit befb850dbc72b117ad6bebabee314e7d41b97183
+%global commit 873f82e89b01478edb8e286ae79fe7e91bf470ea
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:		abrt-java-connector
-Version:	1.0.6
+Version:	1.0.7
 Release:	1%{?dist}
 Summary:	JNI Agent library converting Java exceptions to ABRT problems
 
@@ -14,6 +14,7 @@ Source0:	https://github.com/jfilak/%{name}/archive/%{commit}/%{name}-%{version}-
 BuildRequires:	cmake
 BuildRequires:	libreport-devel
 BuildRequires:	java-1.7.0-openjdk-devel
+BuildRequires:	systemd-devel
 
 Requires:	abrt
 
@@ -96,6 +97,15 @@ make test
 
 
 %changelog
+* Fri Jan 10 2014 Jakub Filak <jfilak@redhat.com> - 1.0.7-1
+- Use the last frame class path for executable
+- Gracefully handle JVMTI errors
+- Add an abstract to README
+- Add support for journald and syslog
+- Make log output disabled by default
+- Add support for changing log directory
+- Fix a race condition causing a crash of JVM
+
 * Tue Oct 01 2013 Jakub Filak <jfilak@redhat.com> - 1.0.6-1
 - Fix a deadlock in GC start callback
 - Disable experimental features in production releases
