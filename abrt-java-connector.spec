@@ -1,8 +1,8 @@
-%global commit 873f82e89b01478edb8e286ae79fe7e91bf470ea
+%global commit 39322b058d182855559ce0d6679e3ad5de5dc82e
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:		abrt-java-connector
-Version:	1.0.7
+Version:	1.0.8
 Release:	1%{?dist}
 Summary:	JNI Agent library converting Java exceptions to ABRT problems
 
@@ -12,9 +12,12 @@ URL:		https://github.com/jfilak/abrt-java-connector
 Source0:	https://github.com/jfilak/%{name}/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
 
 BuildRequires:	cmake
+BuildRequires:	satyr-devel
 BuildRequires:	libreport-devel
+BuildRequires:	abrt-devel
 BuildRequires:	java-1.7.0-openjdk-devel
 BuildRequires:	systemd-devel
+BuildRequires:	gettext
 
 Requires:	abrt
 
@@ -35,49 +38,16 @@ make %{?_smp_mflags}
 %install
 make install DESTDIR=%{buildroot}
 
-# Remove unwanted Fedora specific workflow configuration files
-%if 0%{!?fedora:1}
-rm -f $RPM_BUILD_ROOT/%{_datadir}/libreport/workflows/workflow_FedoraJava.xml
-rm -f $RPM_BUILD_ROOT/%{_sysconfdir}/libreport/workflows.d/report_fedora_java.conf
-rm -f $RPM_BUILD_ROOT/%{_sysconfdir}/libreport/events.d/java_event_fedora.conf
-rm -f $RPM_BUILD_ROOT%{_mandir}/man5/report_fedora_java.conf.5
-rm -f $RPM_BUILD_ROOT%{_mandir}/man5/java_event_fedora.conf.5
-%endif
-
-# Remove unwanted RHEL specific workflow configuration files
-%if 0%{!?rhel:1}
-rm -f $RPM_BUILD_ROOT/%{_datadir}/libreport/workflows/workflow_RHELJava.xml
-rm -f $RPM_BUILD_ROOT/%{_sysconfdir}/libreport/workflows.d/report_rhel_java.conf
-rm -f $RPM_BUILD_ROOT/%{_sysconfdir}/libreport/events.d/java_event_rhel.conf
-rm -f $RPM_BUILD_ROOT%{_mandir}/man5/report_rhel_java.conf.5
-rm -f $RPM_BUILD_ROOT%{_mandir}/man5/java_event_rhel.conf.5
-%endif
-
-
 %files
 %doc LICENSE README AUTHORS
 %config(noreplace) %{_sysconfdir}/libreport/plugins/bugzilla_format_java.conf
 %config(noreplace) %{_sysconfdir}/libreport/plugins/bugzilla_formatdup_java.conf
 %config(noreplace) %{_sysconfdir}/libreport/events.d/java_event.conf
+%{_bindir}/abrt-action-analyze-java
+%{_mandir}/man1/abrt-action-analyze-java.1*
 %{_mandir}/man5/java_event.conf.5*
 %{_mandir}/man5/bugzilla_format_java.conf.5*
 %{_mandir}/man5/bugzilla_formatdup_java.conf.5*
-
-%if 0%{?fedora}
-%{_datadir}/libreport/workflows/workflow_FedoraJava.xml
-%config(noreplace) %{_sysconfdir}/libreport/events.d/java_event_fedora.conf
-%config(noreplace) %{_sysconfdir}/libreport/workflows.d/report_fedora_java.conf
-%{_mandir}/man5/java_event_fedora.conf.5*
-%{_mandir}/man5/report_fedora_java.conf.5*
-%endif
-
-%if 0%{?rhel}
-%{_datadir}/libreport/workflows/workflow_RHELJava.xml
-%config(noreplace) %{_sysconfdir}/libreport/events.d/java_event_rhel.conf
-%config(noreplace) %{_sysconfdir}/libreport/workflows.d/report_rhel_java.conf
-%{_mandir}/man5/java_event_rhel.conf.5*
-%{_mandir}/man5/report_rhel_java.conf.5*
-%endif
 
 # install only unversioned shared object because the package is a Java plugin
 # and not a system library but unfortunately the library must be placed in ld
@@ -97,6 +67,14 @@ make test
 
 
 %changelog
+* Wed Jan 22 2014 Jakub Filak <jfilak@redhat.com> - 1.0.8-1
+- Do not report exceptions caught in a native method
+- Mark stack traces with 3rd party classes as not-reportable
+- Calculate 'duphash' & 'uuid' in satyr
+- Use the main class URL for 'executable'
+- Do not ship own reporting workflow definitions
+- Code optimizations
+
 * Fri Jan 10 2014 Jakub Filak <jfilak@redhat.com> - 1.0.7-1
 - Use the last frame class path for executable
 - Gracefully handle JVMTI errors
