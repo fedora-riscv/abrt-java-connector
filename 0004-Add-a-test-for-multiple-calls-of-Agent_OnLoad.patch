@@ -1,0 +1,54 @@
+From 3fdb3cebe489b75d23f1f21672d4aadd10471ad2 Mon Sep 17 00:00:00 2001
+From: Jakub Filak <jfilak@redhat.com>
+Date: Tue, 4 Feb 2014 16:38:02 +0100
+Subject: [PATCH 4/4] Add a test for multiple calls of Agent_OnLoad
+
+Related rhbz#1049011
+---
+ test/CMakeLists.txt                 | 10 ++++++++++
+ test/outputs/run_three_times.log.in | 13 +++++++++++++
+ 2 files changed, 23 insertions(+)
+ create mode 100644 test/outputs/run_three_times.log.in
+
+diff --git a/test/CMakeLists.txt b/test/CMakeLists.txt
+index 0439294..5b117a1 100644
+--- a/test/CMakeLists.txt
++++ b/test/CMakeLists.txt
+@@ -317,5 +317,15 @@ _add_test(run_remote_thread 0)
+ _add_analyze_test(not_reportable_1remote_class)
+ _add_analyze_test(not_reportable_3remote_classes)
+ 
++_add_test_target(
++    run_three_times
++    SimpleTest
++    DEPENDS ${TEST_JAVA_TARGETS}
++    AGENT_OPTIONS caught=java.lang.ArrayIndexOutOfBoundsException:java.lang.NullPointerException -agentlib=${AGENT_NAME}=output=/proc/pid/0/java.log -agentlib=${AGENT_NAME}=output=/proc/pid/1/java.log
++)
++_add_test(run_three_times 2)
++
++
++
+ get_directory_property(all_run_targets ALL_RUN_TARGETS)
+ add_custom_target(run_all DEPENDS ${all_run_targets})
+diff --git a/test/outputs/run_three_times.log.in b/test/outputs/run_three_times.log.in
+new file mode 100644
+index 0000000..aa8b2c8
+--- /dev/null
++++ b/test/outputs/run_three_times.log.in
+@@ -0,0 +1,13 @@
++Caught exception java.lang.ArrayIndexOutOfBoundsException in method SimpleTest.throwIndexOutOfBoundsException()
++Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: 42
++	at SimpleTest.throwIndexOutOfBoundsException(SimpleTest.java:24) [file:@CMAKE_BINARY_DIR@/test/SimpleTest.class]
++	at SimpleTest.catchIndexOutOfBoundsException(SimpleTest.java:47) [file:@CMAKE_BINARY_DIR@/test/SimpleTest.class]
++	at SimpleTest.throwAndCatchAllExceptions(SimpleTest.java:61) [file:@CMAKE_BINARY_DIR@/test/SimpleTest.class]
++	at SimpleTest.main(SimpleTest.java:81) [file:@CMAKE_BINARY_DIR@/test/SimpleTest.class]
++executable: @CMAKE_BINARY_DIR@/test/SimpleTest.class
++Uncaught exception java.lang.NullPointerException in method SimpleTest.throwNullPointerException()
++Exception in thread "main" java.lang.NullPointerException
++	at SimpleTest.throwNullPointerException(SimpleTest.java:36) [file:@CMAKE_BINARY_DIR@/test/SimpleTest.class]
++	at SimpleTest.throwAndDontCatchException(SimpleTest.java:71) [file:@CMAKE_BINARY_DIR@/test/SimpleTest.class]
++	at SimpleTest.main(SimpleTest.java:83) [file:@CMAKE_BINARY_DIR@/test/SimpleTest.class]
++executable: @CMAKE_BINARY_DIR@/test/SimpleTest.class
+-- 
+1.8.3.1
+

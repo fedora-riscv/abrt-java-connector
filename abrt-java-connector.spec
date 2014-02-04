@@ -3,7 +3,7 @@
 
 Name:		abrt-java-connector
 Version:	1.0.8
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	JNI Agent library converting Java exceptions to ABRT problems
 
 Group:		System Environment/Libraries
@@ -13,6 +13,8 @@ Source0:	https://github.com/jfilak/%{name}/archive/%{commit}/%{name}-%{version}-
 
 Patch0001:	0001-Fix-a-pair-of-defects-uncovered-by-coverity.patch
 Patch0002:	0002-Make-sure-that-agent_onload-and-agent_onunload-are-p.patch
+Patch0003:	0003-Return-the-right-constant-from-Agent_OnLoad.patch
+Patch0004:	0004-Add-a-test-for-multiple-calls-of-Agent_OnLoad.patch
 
 BuildRequires:	cmake
 BuildRequires:	satyr-devel
@@ -71,6 +73,10 @@ make test
 
 
 %changelog
+* Tue Feb 04 2014 Jakub Filak <jfilak@redhat.com> - 1.0.8-3
+- Return the correct value from Agent_OnLoad
+- Add test for multiple calls of Agent_On*
+
 * Tue Feb 04 2014 Jakub Filak <jfilak@redhat.com> - 1.0.8-2
 - Make sure that agent_onload and agent_onunload are processed only once
 - Fix a pair of defects uncovered by coverity
