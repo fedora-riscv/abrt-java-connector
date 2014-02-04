@@ -1,0 +1,51 @@
+From 54be469b8b91272e1f9852670a2f49e6bbecd0d8 Mon Sep 17 00:00:00 2001
+From: Jakub Filak <jfilak@redhat.com>
+Date: Wed, 22 Jan 2014 15:33:50 +0100
+Subject: [PATCH 1/2] Fix a pair of defects uncovered by coverity
+
+---
+ src/abrt-checker.c | 8 ++++++--
+ src/jthread_map.c  | 1 +
+ 2 files changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/src/abrt-checker.c b/src/abrt-checker.c
+index 91485e0..713053c 100644
+--- a/src/abrt-checker.c
++++ b/src/abrt-checker.c
+@@ -2886,7 +2886,11 @@ void parse_commandline_options(char *options)
+         }
+         else if (strcmp("executable", key) == 0)
+         {
+-            if (strcmp("threadclass", value) == 0)
++            if (NULL == value || '\0' == value[0])
++            {
++                fprintf(stderr, "A value of '%s' option cannot be empty\n", key);
++            }
++            else if (strcmp("threadclass", value) == 0)
+             {
+                 VERBOSE_PRINT("Use a thread class for 'executable'\n");
+                 executableFlags |= ABRT_EXECUTABLE_THREAD;
+@@ -2899,7 +2903,7 @@ void parse_commandline_options(char *options)
+             }
+             else
+             {
+-                fprintf(stderr, "Unknown 'executable' option's value '%s'\n", key);
++                fprintf(stderr, "Unknown '%s' option's value '%s'\n", key, value);
+             }
+         }
+         else
+diff --git a/src/jthread_map.c b/src/jthread_map.c
+index 4517398..4cb417b 100644
+--- a/src/jthread_map.c
++++ b/src/jthread_map.c
+@@ -55,6 +55,7 @@ T_jthreadMap *jthread_map_new()
+     if (NULL == map)
+     {
+         fprintf(stderr, __FILE__ ":" STRINGIZE(__LINE__) ": calloc() error\n");
++        return NULL;
+     }
+ 
+     pthread_mutex_init(&map->mutex, /*use default attributes*/NULL);
+-- 
+1.8.3.1
+

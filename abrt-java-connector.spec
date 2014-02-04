@@ -3,13 +3,16 @@
 
 Name:		abrt-java-connector
 Version:	1.0.8
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	JNI Agent library converting Java exceptions to ABRT problems
 
 Group:		System Environment/Libraries
 License:	GPLv2+
 URL:		https://github.com/jfilak/abrt-java-connector
 Source0:	https://github.com/jfilak/%{name}/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
+
+Patch0001:	0001-Fix-a-pair-of-defects-uncovered-by-coverity.patch
+Patch0002:	0002-Make-sure-that-agent_onload-and-agent_onunload-are-p.patch
 
 BuildRequires:	cmake
 BuildRequires:	satyr-devel
@@ -18,6 +21,7 @@ BuildRequires:	abrt-devel
 BuildRequires:	java-1.7.0-openjdk-devel
 BuildRequires:	systemd-devel
 BuildRequires:	gettext
+BuildRequires:	git
 
 Requires:	abrt
 
@@ -27,7 +31,7 @@ exceptions and transform them to ABRT problems
 
 
 %prep
-%setup -qn %{name}-%{commit}
+%autosetup -n %{name}-%{commit} -S git
 
 
 %build
@@ -67,6 +71,11 @@ make test
 
 
 %changelog
+* Tue Feb 04 2014 Jakub Filak <jfilak@redhat.com> - 1.0.8-2
+- Make sure that agent_onload and agent_onunload are processed only once
+- Fix a pair of defects uncovered by coverity
+- Resolves: #1049011
+
 * Wed Jan 22 2014 Jakub Filak <jfilak@redhat.com> - 1.0.8-1
 - Do not report exceptions caught in a native method
 - Mark stack traces with 3rd party classes as not-reportable
