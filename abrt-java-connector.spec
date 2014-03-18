@@ -1,20 +1,15 @@
-%global commit 39322b058d182855559ce0d6679e3ad5de5dc82e
+%global commit c933894f160345a685ee2b1664adc1d1c65a4875
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:		abrt-java-connector
-Version:	1.0.8
-Release:	3%{?dist}
+Version:	1.0.9
+Release:	1%{?dist}
 Summary:	JNI Agent library converting Java exceptions to ABRT problems
 
 Group:		System Environment/Libraries
 License:	GPLv2+
 URL:		https://github.com/jfilak/abrt-java-connector
 Source0:	https://github.com/jfilak/%{name}/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
-
-Patch0001:	0001-Fix-a-pair-of-defects-uncovered-by-coverity.patch
-Patch0002:	0002-Make-sure-that-agent_onload-and-agent_onunload-are-p.patch
-Patch0003:	0003-Return-the-right-constant-from-Agent_OnLoad.patch
-Patch0004:	0004-Add-a-test-for-multiple-calls-of-Agent_OnLoad.patch
 
 BuildRequires:	cmake
 BuildRequires:	satyr-devel
@@ -23,6 +18,7 @@ BuildRequires:	abrt-devel
 BuildRequires:	java-1.7.0-openjdk-devel
 BuildRequires:	systemd-devel
 BuildRequires:	gettext
+BuildRequires:	check-devel
 BuildRequires:	git
 
 Requires:	abrt
@@ -49,11 +45,13 @@ make install DESTDIR=%{buildroot}
 %config(noreplace) %{_sysconfdir}/libreport/plugins/bugzilla_format_java.conf
 %config(noreplace) %{_sysconfdir}/libreport/plugins/bugzilla_formatdup_java.conf
 %config(noreplace) %{_sysconfdir}/libreport/events.d/java_event.conf
+%config(noreplace) %{_sysconfdir}/abrt/plugins/java.conf
 %{_bindir}/abrt-action-analyze-java
 %{_mandir}/man1/abrt-action-analyze-java.1*
 %{_mandir}/man5/java_event.conf.5*
 %{_mandir}/man5/bugzilla_format_java.conf.5*
 %{_mandir}/man5/bugzilla_formatdup_java.conf.5*
+%{_datadir}/abrt/conf.d/plugins/java.conf
 
 # install only unversioned shared object because the package is a Java plugin
 # and not a system library but unfortunately the library must be placed in ld
@@ -73,6 +71,11 @@ make test
 
 
 %changelog
+* Tue Mar 18 2014 Jakub Filak <jfilak@redhat.com> - 1.0.9-1
+- Make the agent configurable via a configuration file
+- Include custom debug info in bug reports
+- Make the detection of 'executable' working with JAR files
+
 * Tue Feb 04 2014 Jakub Filak <jfilak@redhat.com> - 1.0.8-3
 - Return the correct value from Agent_OnLoad
 - Add test for multiple calls of Agent_On*
