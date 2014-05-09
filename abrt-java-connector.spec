@@ -3,13 +3,15 @@
 
 Name:		abrt-java-connector
 Version:	1.0.10
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	JNI Agent library converting Java exceptions to ABRT problems
 
 Group:		System Environment/Libraries
 License:	GPLv2+
 URL:		https://github.com/jfilak/abrt-java-connector
 Source0:	https://github.com/jfilak/%{name}/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
+
+Patch01:	0001-Add-test-results-for-Linux-ppc64le.patch
 
 BuildRequires:	cmake
 BuildRequires:	satyr-devel
@@ -30,6 +32,11 @@ exceptions and transform them to ABRT problems
 
 
 %prep
+# http://www.rpm.org/wiki/PackagerDocs/Autosetup
+# Default '__scm_apply_git' is 'git apply && git commit' but this workflow
+# doesn't allow us to create a new file within a patch, so we have to use
+# 'git am' (see /usr/lib/rpm/macros for more details)
+%define __scm_apply_git(qp:m:) %{__git} am
 %autosetup -n %{name}-%{commit} -S git
 
 
@@ -72,6 +79,10 @@ make test
 
 
 %changelog
+* Fri May 9 2014 Jakub Filak <jfilak@redhat.com> - 1.0.10-2
+- Add test results for Linux-ppc64le
+- Related: #981682
+
 * Fri Apr 4 2014 Jakub Filak <jfilak@redhat.com> - 1.0.10-1
 - Temporarily ignore failures of reporter-ureport until ABRT start using FAF2
 - Prevent users from reporting low quality stack traces
