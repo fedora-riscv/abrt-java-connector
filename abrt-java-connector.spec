@@ -3,13 +3,15 @@
 
 Name:		abrt-java-connector
 Version:	1.0.10
-Release:	1%{?dist}
+Release:	1.981682.ppc64le%{?dist}
 Summary:	JNI Agent library converting Java exceptions to ABRT problems
 
 Group:		System Environment/Libraries
 License:	GPLv2+
 URL:		https://github.com/jfilak/abrt-java-connector
 Source0:	https://github.com/jfilak/%{name}/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
+
+Patch01:	0001-Add-test-results-for-Linux-ppc64le.patch
 
 BuildRequires:	cmake
 BuildRequires:	satyr-devel
@@ -72,6 +74,10 @@ make test
 
 
 %changelog
+* Fri May 9 2014 Jakub Filak <jfilak@redhat.com> - 1.0.10-1.981682.ppc64le
+- Add test results for Linux-ppc64le
+- Related: #981682
+
 * Fri Apr 4 2014 Jakub Filak <jfilak@redhat.com> - 1.0.10-1
 - Temporarily ignore failures of reporter-ureport until ABRT start using FAF2
 - Prevent users from reporting low quality stack traces
