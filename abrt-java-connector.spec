@@ -1,9 +1,9 @@
-%global commit fdf80c5de2400437cc2fbe56f14aacbf346274df
+%global commit 230b72697c7c43db747b2644b17cb2685d1539de
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:		abrt-java-connector
-Version:	1.0.10
-Release:	4%{?dist}
+Version:	1.1.0
+Release:	1%{?dist}
 Summary:	JNI Agent library converting Java exceptions to ABRT problems
 
 Group:		System Environment/Libraries
@@ -11,13 +11,11 @@ License:	GPLv2+
 URL:		https://github.com/jfilak/abrt-java-connector
 Source0:	https://github.com/jfilak/%{name}/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
 
-Patch01:	0001-Add-test-results-for-Linux-ppc64le.patch
-
 BuildRequires:	cmake
 BuildRequires:	satyr-devel
 BuildRequires:	libreport-devel
 BuildRequires:	abrt-devel
-BuildRequires:	java-1.7.0-openjdk-devel
+BuildRequires:	java-devel
 BuildRequires:	systemd-devel
 BuildRequires:	gettext
 BuildRequires:	check-devel
@@ -25,6 +23,10 @@ BuildRequires:	rpm-devel
 BuildRequires:	git
 
 Requires:	abrt
+
+Patch0001: 0001-Decrease-the-tested-memory-limits-because-of-failure.patch
+Patch0002: 0002-Adapt-the-arm-test-outputs-to-java-1.8.patch
+Patch0003: 0003-Add-java-1.8-test-outputs-for-aarch-ppc-and-s390.patch
 
 %description
 JNI library providing an agent capable to process both caught and uncaught
@@ -61,24 +63,27 @@ make install DESTDIR=%{buildroot}
 %{_mandir}/man5/bugzilla_formatdup_java.conf.5*
 %{_datadir}/abrt/conf.d/plugins/java.conf
 
-# install only unversioned shared object because the package is a Java plugin
-# and not a system library but unfortunately the library must be placed in ld
-# library paths
-%{_libdir}/lib%{name}.so
+# Applications may use a single subdirectory under/usr/lib.
+# http://www.pathname.com/fhs/pub/fhs-2.3.html#PURPOSE22
+#
+# Java does not support multilib.
+# https://fedorahosted.org/fesco/ticket/961
+%{_prefix}/lib/abrt-java-connector
 
 
 %check
-make test
-
-
-%post -p /sbin/ldconfig
-
-
-%postun -p /sbin/ldconfig
-
+make test || {
+    cat Testing/Temporary/LastTest.log
+    exit 1
+}
 
 
 %changelog
+* Wed Oct 29 2014 Jakub Filak <jfilak@redhat.com> - 1.1.0-1
+- Support java-1.8-openjdk
+- Install the library to /usr/lib/abrt-java-connector on all arches
+- Resolves: #1136437
+
 * Fri Aug 15 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0.10-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
