@@ -1,7 +1,7 @@
 From ec252755392cd5dcd0eaf63e5d0b46c246c24199 Mon Sep 17 00:00:00 2001
 From: Jakub Filak <jfilak@redhat.com>
 Date: Thu, 30 Oct 2014 11:58:34 +0100
-Subject: [PATCH 3/3] Add java-1.8 test outputs for aarch, ppc and s390
+Subject: [PATCH] Add java-1.8 test outputs for aarch, ppc and s390
 
 Related to #42
 ---
