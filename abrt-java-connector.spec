@@ -3,7 +3,7 @@
 
 Name:		abrt-java-connector
 Version:	1.1.0
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	JNI Agent library converting Java exceptions to ABRT problems
 
 Group:		System Environment/Libraries
@@ -24,9 +24,11 @@ BuildRequires:	git
 
 Requires:	abrt
 
+# git format-patch 416db946329b043a58acf557f0525361a97e1da1 -N
 Patch0001: 0001-Decrease-the-tested-memory-limits-because-of-failure.patch
 Patch0002: 0002-Adapt-the-arm-test-outputs-to-java-1.8.patch
 Patch0003: 0003-Add-java-1.8-test-outputs-for-aarch-ppc-and-s390.patch
+Patch0004: 0004-Update-Linux-aarch64-test-outputs.patch
 
 %description
 JNI library providing an agent capable to process both caught and uncaught
@@ -79,6 +81,9 @@ make test || {
 
 
 %changelog
+* Tue Nov 04 2014 Jakub Filak <jfilak@redhat.com> - 1.1.0-2
+- Update the test results for aarch64
+
 * Wed Oct 29 2014 Jakub Filak <jfilak@redhat.com> - 1.1.0-1
 - Support java-1.8-openjdk
 - Install the library to /usr/lib/abrt-java-connector on all arches

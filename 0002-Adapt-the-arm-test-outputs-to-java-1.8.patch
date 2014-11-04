@@ -1,7 +1,7 @@
 From 0495592c727a624d12e7840ec62d4d60370ed5d3 Mon Sep 17 00:00:00 2001
 From: Jakub Filak <jfilak@redhat.com>
 Date: Thu, 30 Oct 2014 11:41:08 +0100
-Subject: [PATCH 2/3] Adapt the arm test outputs to java-1.8
+Subject: [PATCH] Adapt the arm test outputs to java-1.8
 
 Related to #42
 ---
