@@ -3,7 +3,7 @@
 
 Name:		abrt-java-connector
 Version:	1.1.0
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	JNI Agent library converting Java exceptions to ABRT problems
 
 Group:		System Environment/Libraries
@@ -13,7 +13,7 @@ Source0:	https://github.com/jfilak/%{name}/archive/%{commit}/%{name}-%{version}-
 
 BuildRequires:	cmake
 BuildRequires:	satyr-devel
-BuildRequires:	libreport-devel
+BuildRequires:	libreport-devel >= 2.4.0
 BuildRequires:	abrt-devel
 BuildRequires:	java-devel
 BuildRequires:	systemd-devel
@@ -30,6 +30,10 @@ Patch0002: 0002-Adapt-the-arm-test-outputs-to-java-1.8.patch
 Patch0003: 0003-Add-java-1.8-test-outputs-for-aarch-ppc-and-s390.patch
 Patch0004: 0004-Update-Linux-aarch64-test-outputs.patch
 Patch0005: 0005-Update-the-test-results.patch
+Patch0006: 0006-Update-README.patch
+Patch0007: 0007-Remove-function-malloc_readlink.patch
+Patch0008: 0008-Makefile-Adds-srpm-target.patch
+Patch0009: 0009-Update-the-test-results.patch
 
 %description
 JNI library providing an agent capable to process both caught and uncaught
@@ -82,6 +86,11 @@ make test || {
 
 
 %changelog
+* Mon Mar 16 2015 Matej Habrnal <mhabrnal@redhat.com> - 1.1.0-4
+- Make the dependency on systemd optional
+- Update the test results
+- Resolves: #1185626
+
 * Tue Nov 04 2014 Jakub Filak <jfilak@redhat.com> - 1.1.0-3
 - Update the test results for armv7l
 
