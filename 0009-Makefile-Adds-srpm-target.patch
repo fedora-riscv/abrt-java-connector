@@ -27,5 +27,5 @@ index 2e20217..8802256 100644
  $(OUT_DIR):
  	mkdir -p $@ && cd $@ && cmake $$CMAKE_OPTS ../
 -- 
-1.9.3
+2.4.6
 

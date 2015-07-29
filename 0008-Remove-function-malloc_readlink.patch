@@ -48,5 +48,5 @@ index 56f2fa4..4e1a450 100644
  /*
   * Read executable name from the special file /proc/${PID}/exe
 -- 
-1.9.3
+2.4.6
 

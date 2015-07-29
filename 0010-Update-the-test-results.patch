@@ -126,5 +126,5 @@ index 3d83a66..efc6d8e 100644
  	at java.io.FileOutputStream.<init>(FileOutputStream.java:LINENO) [jar:file:JAVA_AND_SYSTEM_SPECIFIC_PATH/rt.jar!/java/io/FileOutputStream.class]
  	at Test.writeToUnwritableFile(Test.java:134) [file:@CMAKE_BINARY_DIR@/test/Test.class]
 -- 
-1.9.3
+2.4.6
 

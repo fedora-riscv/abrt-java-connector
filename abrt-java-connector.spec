@@ -3,7 +3,7 @@
 
 Name:		abrt-java-connector
 Version:	1.1.0
-Release:	5%{?dist}
+Release:	6%{?dist}
 Summary:	JNI Agent library converting Java exceptions to ABRT problems
 
 Group:		System Environment/Libraries
@@ -30,10 +30,13 @@ Patch0002: 0002-Adapt-the-arm-test-outputs-to-java-1.8.patch
 Patch0003: 0003-Add-java-1.8-test-outputs-for-aarch-ppc-and-s390.patch
 Patch0004: 0004-Update-Linux-aarch64-test-outputs.patch
 Patch0005: 0005-Update-the-test-results.patch
-Patch0006: 0006-Update-README.patch
-Patch0007: 0007-Remove-function-malloc_readlink.patch
-Patch0008: 0008-Makefile-Adds-srpm-target.patch
-Patch0009: 0009-Update-the-test-results.patch
+Patch0006: 0006-Make-the-dependency-on-systemd-optional.patch
+Patch0007: 0007-Update-README.patch
+Patch0008: 0008-Remove-function-malloc_readlink.patch
+Patch0009: 0009-Makefile-Adds-srpm-target.patch
+Patch0010: 0010-Update-the-test-results.patch
+Patch0011: 0011-Clearly-state-that-tests-cannot-be-run-under-root.patch
+Patch0012: 0012-Disable-ClassNotFoundException-test-again.patch
 
 %description
 JNI library providing an agent capable to process both caught and uncaught
@@ -86,6 +89,9 @@ make test || {
 
 
 %changelog
+* Tue Jul 28 2015 Jakub Filak <jfilak@redhat.com> - 1.1.0-6
+- Rebuilt for new rpmlib : https://lists.fedoraproject.org/pipermail/devel/2015-July/212672.html
+
 * Tue Jun 16 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.1.0-5
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
 
