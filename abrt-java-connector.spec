@@ -3,7 +3,7 @@
 
 Name:		abrt-java-connector
 Version:	1.1.0
-Release:	9%{?dist}
+Release:	10%{?dist}
 Summary:	JNI Agent library converting Java exceptions to ABRT problems
 
 Group:		System Environment/Libraries
@@ -39,6 +39,9 @@ Patch0011: 0011-Clearly-state-that-tests-cannot-be-run-under-root.patch
 Patch0012: 0012-Disable-ClassNotFoundException-test-again.patch
 Patch0013: 0013-Correct-includes-for-ABRT.patch
 Patch0014: 0014-Drop-pedantic-from-CFLAGS.patch
+Patch0015: 0015-Rename-log-to-log_warning.patch
+Patch0016: 0016-Update-the-test-results.patch
+Patch0017: 0017-Fix-test-outputs-for-armv7l.patch
 
 %description
 JNI library providing an agent capable to process both caught and uncaught
@@ -91,6 +94,9 @@ make test || {
 
 
 %changelog
+* Fri Sep 01 2017 Matej Habral <mhabrnal@redhat.com> - 1.1.0-10
+- Rename log() to log_warning()
+
 * Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.1.0-9
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
