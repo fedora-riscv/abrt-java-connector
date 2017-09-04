@@ -3,7 +3,7 @@
 
 Name:		abrt-java-connector
 Version:	1.1.0
-Release:	10%{?dist}
+Release:	11%{?dist}
 Summary:	JNI Agent library converting Java exceptions to ABRT problems
 
 Group:		System Environment/Libraries
@@ -94,6 +94,9 @@ make test || {
 
 
 %changelog
+* Mon Sep 04 2017 Matej Habral <mhabrnal@redhat.com> - 1.1.0-11
+- Add missing patch
+
 * Fri Sep 01 2017 Matej Habral <mhabrnal@redhat.com> - 1.1.0-10
 - Rename log() to log_warning()
 
