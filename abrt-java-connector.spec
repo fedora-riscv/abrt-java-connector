@@ -41,6 +41,7 @@ Patch0013: 0013-Correct-includes-for-ABRT.patch
 Patch0014: 0014-Drop-pedantic-from-CFLAGS.patch
 Patch0015: 0015-Rename-log-to-log_warning.patch
 Patch0016: 0016-Update-the-test-results.patch
+Patch0017: 0017-Fix-test-outputs-for-armv7l.patch
 
 %description
 JNI library providing an agent capable to process both caught and uncaught
