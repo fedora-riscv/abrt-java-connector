@@ -3,7 +3,7 @@
 
 Name:		abrt-java-connector
 Version:	1.1.0
-Release:	13%{?dist}
+Release:	14%{?dist}
 Summary:	JNI Agent library converting Java exceptions to ABRT problems
 
 Group:		System Environment/Libraries
@@ -41,7 +41,6 @@ Patch0013: 0013-Correct-includes-for-ABRT.patch
 Patch0014: 0014-Drop-pedantic-from-CFLAGS.patch
 Patch0015: 0015-Rename-log-to-log_warning.patch
 Patch0016: 0016-Update-the-test-results.patch
-Patch0017: 0017-Fix-test-outputs-for-armv7l.patch
 
 %description
 JNI library providing an agent capable to process both caught and uncaught
@@ -87,13 +86,16 @@ make install DESTDIR=%{buildroot}
 
 
 %check
-#make test || {
-#    cat Testing/Temporary/LastTest.log
-#    exit 1
-#}
+make test || {
+    cat Testing/Temporary/LastTest.log
+    exit 1
+}
 
 
 %changelog
+* Mon Sep 11 2017 Matej Habrnal <mhabrnal@redhat.com> - 1.1.0-14
+- turn on unit testing and fix test outputs
+
 * Mon Aug 28 2017 Matej Habrnal <mhabrnal@redhat.com> - 1.1.0-13
 - Rename log() to log_warning()
 - Update the test results
