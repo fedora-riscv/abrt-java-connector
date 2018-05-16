@@ -1,59 +1,46 @@
-%global commit 230b72697c7c43db747b2644b17cb2685d1539de
+%global commit cbd081ad9a340eee558644352ccafedb18df8fe6
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:		abrt-java-connector
-Version:	1.1.0
-Release:	15%{?dist}
+Version:	1.1.1
+Release:	1%{?dist}
 Summary:	JNI Agent library converting Java exceptions to ABRT problems
 
 Group:		System Environment/Libraries
 License:	GPLv2+
-URL:		https://github.com/jfilak/abrt-java-connector
-Source0:	https://github.com/jfilak/%{name}/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
+URL:		https://github.com/abrt/abrt-java-connector
+Source0:	https://github.com/abrt/%{name}/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
 
 BuildRequires:	cmake
 BuildRequires:	satyr-devel
-BuildRequires:	libreport-devel >= 2.4.0
+BuildRequires:	libreport-devel
 BuildRequires:	abrt-devel
 BuildRequires:	java-devel
 BuildRequires:	systemd-devel
 BuildRequires:	gettext
 BuildRequires:	check-devel
 BuildRequires:	rpm-devel
-BuildRequires:	git
 
 Requires:	abrt
 
-# git format-patch 416db946329b043a58acf557f0525361a97e1da1 -N
-Patch0001: 0001-Decrease-the-tested-memory-limits-because-of-failure.patch
-Patch0002: 0002-Adapt-the-arm-test-outputs-to-java-1.8.patch
-Patch0003: 0003-Add-java-1.8-test-outputs-for-aarch-ppc-and-s390.patch
-Patch0004: 0004-Update-Linux-aarch64-test-outputs.patch
-Patch0005: 0005-Update-the-test-results.patch
-Patch0006: 0006-Make-the-dependency-on-systemd-optional.patch
-Patch0007: 0007-Update-README.patch
-Patch0008: 0008-Remove-function-malloc_readlink.patch
-Patch0009: 0009-Makefile-Adds-srpm-target.patch
-Patch0010: 0010-Update-the-test-results.patch
-Patch0011: 0011-Clearly-state-that-tests-cannot-be-run-under-root.patch
-Patch0012: 0012-Disable-ClassNotFoundException-test-again.patch
-Patch0013: 0013-Correct-includes-for-ABRT.patch
-Patch0014: 0014-Drop-pedantic-from-CFLAGS.patch
-Patch0015: 0015-Rename-log-to-log_warning.patch
-Patch0016: 0016-Update-the-test-results.patch
-
 %description
+JNI library providing an agent capable to process both caught and uncaught
+exceptions and transform them to ABRT problems.
+
+%package container
+Summary: JNI Agent library converting Java exceptions to ABRT problems (minimal version)
+Requires: container-exception-logger
+conflicts: %{name}
+
+%description container
 JNI library providing an agent capable to process both caught and uncaught
 exceptions and transform them to ABRT problems
 
+This package contains only minimal set of files needed for container exception
+logging.
 
 %prep
-# http://www.rpm.org/wiki/PackagerDocs/Autosetup
-# Default '__scm_apply_git' is 'git apply && git commit' but this workflow
-# doesn't allow us to create a new file within a patch, so we have to use
-# 'git am' (see /usr/lib/rpm/macros for more details)
-%define __scm_apply_git(qp:m:) %{__git} am
-%autosetup -n %{name}-%{commit} -S git
+%setup -qn %{name}-%{commit}
 
 
 %build
@@ -65,7 +52,8 @@ make %{?_smp_mflags}
 make install DESTDIR=%{buildroot}
 
 %files
-%doc LICENSE README AUTHORS
+%doc README AUTHORS
+%license LICENSE
 %config(noreplace) %{_sysconfdir}/libreport/plugins/bugzilla_format_java.conf
 %config(noreplace) %{_sysconfdir}/libreport/plugins/bugzilla_formatdup_java.conf
 %config(noreplace) %{_sysconfdir}/libreport/events.d/java_event.conf
@@ -84,6 +72,16 @@ make install DESTDIR=%{buildroot}
 # https://fedorahosted.org/fesco/ticket/961
 %{_prefix}/lib/abrt-java-connector
 
+%files container
+%doc README AUTHORS
+%license LICENSE
+# Applications may use a single subdirectory under/usr/lib.
+# http://www.pathname.com/fhs/pub/fhs-2.3.html#PURPOSE22
+#
+# Java does not support multilib.
+# https://fedorahosted.org/fesco/ticket/961
+%{_prefix}/lib/abrt-java-connector
+
 
 %check
 make test || {
@@ -93,67 +91,16 @@ make test || {
 
 
 %changelog
-* Wed Feb 07 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.1.0-15
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
-
-* Mon Sep 11 2017 Matej Habrnal <mhabrnal@redhat.com> - 1.1.0-14
-- turn on unit testing and fix test outputs
-
-* Mon Aug 28 2017 Matej Habrnal <mhabrnal@redhat.com> - 1.1.0-13
-- Rename log() to log_warning()
-- Update the test results
-- Resolves: #1484585
-
-* Thu Aug 10 2017 Igor Gnatenko <ignatenko@redhat.com> - 1.1.0-12
-- Rebuilt for RPM soname bump
-
-* Wed Aug 02 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.1.0-11
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
-
-* Wed Jul 26 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.1.0-10
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
-
-* Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.1.0-9
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
-
-* Mon Feb 15 2016 Jakub Filak <jfilak@redhat.com> - 1.1.0-8
-- Drop '-pedantic' from CFLAGS
+* Wed May 16 2018 Matej Habrnal <mhabrnal@redhat.com> - 1.1.1-1
+- Add possibility report reports problems to CEL
+- Upate test results
+- Change log() to log_warning()
 - Correct includes for ABRT
-- Resolves: #1307305
-
-* Wed Feb 03 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1.1.0-7
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
-
-* Tue Jul 28 2015 Jakub Filak <jfilak@redhat.com> - 1.1.0-6
-- Rebuilt for new rpmlib : https://lists.fedoraproject.org/pipermail/devel/2015-July/212672.html
-
-* Tue Jun 16 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.1.0-5
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
-
-* Mon Mar 16 2015 Matej Habrnal <mhabrnal@redhat.com> - 1.1.0-4
 - Make the dependency on systemd optional
-- Update the test results
-- Resolves: #1185626
-
-* Tue Nov 04 2014 Jakub Filak <jfilak@redhat.com> - 1.1.0-3
-- Update the test results for armv7l
-
-* Tue Nov 04 2014 Jakub Filak <jfilak@redhat.com> - 1.1.0-2
-- Update the test results for aarch64
 
 * Wed Oct 29 2014 Jakub Filak <jfilak@redhat.com> - 1.1.0-1
 - Support java-1.8-openjdk
 - Install the library to /usr/lib/abrt-java-connector on all arches
-
-* Fri Aug 15 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0.10-4
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
-
-* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0.10-3
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
-
-* Fri May 9 2014 Jakub Filak <jfilak@redhat.com> - 1.0.10-2
-- Add test results for Linux-ppc64le
-- Related: #981682
 
 * Fri Apr 4 2014 Jakub Filak <jfilak@redhat.com> - 1.0.10-1
 - Temporarily ignore failures of reporter-ureport until ABRT start using FAF2
@@ -163,14 +110,6 @@ make test || {
 - Make the agent configurable via a configuration file
 - Include custom debug info in bug reports
 - Make the detection of 'executable' working with JAR files
-
-* Tue Feb 04 2014 Jakub Filak <jfilak@redhat.com> - 1.0.8-3
-- Return the correct value from Agent_OnLoad
-- Add test for multiple calls of Agent_On*
-
-* Tue Feb 04 2014 Jakub Filak <jfilak@redhat.com> - 1.0.8-2
-- Make sure that agent_onload and agent_onunload are processed only once
-- Fix a pair of defects uncovered by coverity
 
 * Wed Jan 22 2014 Jakub Filak <jfilak@redhat.com> - 1.0.8-1
 - Do not report exceptions caught in a native method
