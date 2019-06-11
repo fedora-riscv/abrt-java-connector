@@ -1,9 +1,9 @@
-%global commit cbd081ad9a340eee558644352ccafedb18df8fe6
+%global commit bef7e39ce5fdc4a8a620d56be186d4463ed761a8
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:		abrt-java-connector
-Version:	1.1.1
-Release:	2%{?dist}
+Version:	1.1.2
+Release:	1%{?dist}
 Summary:	JNI Agent library converting Java exceptions to ABRT problems
 
 Group:		System Environment/Libraries
@@ -93,6 +93,9 @@ make test || {
 
 
 %changelog
+- Fix gcc string truncation warning for strncpy
+- Replace legacy backticked with $() notation
+
 * Thu Jul 12 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1.1.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
