@@ -93,6 +93,7 @@ make test || {
 
 
 %changelog
+* Tue Jun 11 2019 Martin Kutlak <mkutlak@redhat.com> - 1.1.2-1
 - Fix gcc string truncation warning for strncpy
 - Replace legacy backticked with $() notation
 
