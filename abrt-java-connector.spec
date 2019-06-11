@@ -1,9 +1,9 @@
-%global commit cbd081ad9a340eee558644352ccafedb18df8fe6
+%global commit bef7e39ce5fdc4a8a620d56be186d4463ed761a8
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:		abrt-java-connector
-Version:	1.1.1
-Release:	5%{?dist}
+Version:	1.1.2
+Release:	1%{?dist}
 Summary:	JNI Agent library converting Java exceptions to ABRT problems
 
 License:	GPLv2+
@@ -92,6 +92,10 @@ make test || {
 
 
 %changelog
+* Tue Jun 11 2019 Martin Kutlak <mkutlak@redhat.com> - 1.1.2-1
+- Fix gcc string truncation warning for strncpy
+- Replace legacy backticked with $() notation
+
 * Mon Jun 10 22:13:17 CET 2019 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 1.1.1-5
 - Rebuild for RPM 4.15
 
