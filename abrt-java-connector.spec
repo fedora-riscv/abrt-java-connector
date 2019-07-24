@@ -3,7 +3,7 @@
 
 Name:		abrt-java-connector
 Version:	1.1.2
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	JNI Agent library converting Java exceptions to ABRT problems
 
 License:	GPLv2+
@@ -92,6 +92,9 @@ make test || {
 
 
 %changelog
+* Wed Jul 24 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.1.2-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
+
 * Tue Jun 11 2019 Martin Kutlak <mkutlak@redhat.com> - 1.1.2-1
 - Fix gcc string truncation warning for strncpy
 - Replace legacy backticked with $() notation
