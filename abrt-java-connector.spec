@@ -15,6 +15,7 @@ BuildRequires: abrt-devel
 BuildRequires: check-devel
 BuildRequires: cmake
 BuildRequires: gcc
+BuildRequires: gcc-c++
 BuildRequires: gettext
 BuildRequires: git-core
 BuildRequires: java-devel
@@ -24,8 +25,6 @@ BuildRequires: satyr-devel
 BuildRequires: systemd-devel
 
 Requires:      abrt
-
-Patch0001:     0001-CMakeLists.txt-Complete-project-call.patch
 
 %description
 JNI library providing an agent capable to process both caught and uncaught
@@ -97,7 +96,6 @@ make test || {
 %changelog
 * Fri Feb 07 2020 Ernestas Kulik <ekulik@redhat.com> - 1.1.3-1
 - Fix stack traces not being logged in journald
-- Set project language to C to avoid looking for a C++ compiler
 
 * Fri Feb 07 2020 Igor Raits <ignatenkobrain@fedoraproject.org> - 1.1.2-4
 - Rebuild for satyr 0.30
