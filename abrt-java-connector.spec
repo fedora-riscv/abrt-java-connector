@@ -16,6 +16,7 @@ BuildRequires: check-devel
 BuildRequires: cmake
 BuildRequires: gcc
 BuildRequires: gettext
+BuildRequires: git-core
 BuildRequires: java-devel
 BuildRequires: libreport-devel
 BuildRequires: rpm-devel
@@ -23,6 +24,8 @@ BuildRequires: satyr-devel
 BuildRequires: systemd-devel
 
 Requires:      abrt
+
+Patch0001:     0001-CMakeLists.txt-Complete-project-call.patch
 
 %description
 JNI library providing an agent capable to process both caught and uncaught
@@ -41,7 +44,7 @@ This package contains only minimal set of files needed for container exception
 logging.
 
 %prep
-%setup -qn %{name}-%{commit}
+%autosetup -n %{name}-%{commit}
 
 
 %build
@@ -94,6 +97,7 @@ make test || {
 %changelog
 * Fri Feb 07 2020 Ernestas Kulik <ekulik@redhat.com> - 1.1.3-1
 - Fix stack traces not being logged in journald
+- Set project language to C to avoid looking for a C++ compiler
 
 * Fri Feb 07 2020 Igor Raits <ignatenkobrain@fedoraproject.org> - 1.1.2-4
 - Rebuild for satyr 0.30

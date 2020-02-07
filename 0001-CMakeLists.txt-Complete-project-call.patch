@@ -1,0 +1,38 @@
+From 18454b71170605b1a55ae13eca73fb8170b036a2 Mon Sep 17 00:00:00 2001
+From: Ernestas Kulik <ekulik@redhat.com>
+Date: Fri, 7 Feb 2020 10:00:49 +0100
+Subject: [PATCH] CMakeLists.txt: Complete project() call
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+This means setting the version there (requiring CMP0048 to be set to
+NEW) and setting LANGUAGES to C, since we don’t need a C++ compiler.
+---
+ CMakeLists.txt | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index b1a6bf0..679cae9 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,10 +1,12 @@
+ cmake_minimum_required(VERSION 2.8)
+-
+-project(abrt-java-connector)
+-enable_testing()
++cmake_policy(SET CMP0048 NEW)
+ 
+ # Beware, PROJECT_VERSION will be overridden by information from git
+-set(PROJECT_VERSION "1.1.3")
++project(
++    abrt-java-connector
++    VERSION 1.1.3
++    LANGUAGES C)
++enable_testing()
+ 
+ message("Configuring ${PROJECT_NAME}-${PROJECT_VERSION} on ${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_PROCESSOR}")
+ 
+-- 
+2.24.1
+
