@@ -1,8 +1,8 @@
-%global commit 4b329c7a8a03bcb6764451466bbd0ece0030bb86
+%global commit 7b2a3a1b8884ab08fe4cc7737de7f9f45d8f24f1
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:          abrt-java-connector
-Version:       1.1.3
+Version:       1.1.4
 Release:       1%{?dist}
 Summary:       JNI Agent library converting Java exceptions to ABRT problems
 
@@ -94,6 +94,9 @@ make test || {
 
 
 %changelog
+* Fri Feb 07 2020 Ernestas Kulik <ekulik@redhat.com> - 1.1.4-1
+- Fix build failure with GCC 10
+
 * Fri Feb 07 2020 Ernestas Kulik <ekulik@redhat.com> - 1.1.3-1
 - Fix stack traces not being logged in journald
 
