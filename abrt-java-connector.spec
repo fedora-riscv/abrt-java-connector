@@ -1,28 +1,30 @@
-%global commit bef7e39ce5fdc4a8a620d56be186d4463ed761a8
+%global commit ee2f49bd058d87c5ebd66fddc3c6d4aecdb50170
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
-Name:		abrt-java-connector
-Version:	1.1.2
-Release:	2%{?dist}
-Summary:	JNI Agent library converting Java exceptions to ABRT problems
+Name:          abrt-java-connector
+Version:       1.1.4
+Release:       1%{?dist}
+Summary:       JNI Agent library converting Java exceptions to ABRT problems
 
-License:	GPLv2+
-URL:		https://github.com/abrt/abrt-java-connector
-Source0:	https://github.com/abrt/%{name}/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
+Group:         System Environment/Libraries
+License:       GPLv2+
+URL:           https://github.com/abrt/abrt-java-connector
+Source0:       https://github.com/abrt/%{name}/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
 
-BuildRequires:  gcc
-BuildRequires:  gcc-c++
-BuildRequires:	cmake
-BuildRequires:	satyr-devel
-BuildRequires:	libreport-devel
-BuildRequires:	abrt-devel
-BuildRequires:	java-devel
-BuildRequires:	systemd-devel
-BuildRequires:	gettext
-BuildRequires:	check-devel
-BuildRequires:	rpm-devel
+BuildRequires: abrt-devel
+BuildRequires: check-devel
+BuildRequires: cmake
+BuildRequires: gcc
+BuildRequires: gcc-c++
+BuildRequires: gettext
+BuildRequires: git-core
+BuildRequires: java-devel
+BuildRequires: libreport-devel
+BuildRequires: rpm-devel
+BuildRequires: satyr-devel
+BuildRequires: systemd-devel
 
-Requires:	abrt
+Requires:      abrt
 
 %description
 JNI library providing an agent capable to process both caught and uncaught
@@ -92,6 +94,9 @@ make test || {
 
 
 %changelog
+* Fri Feb 07 2020 Ernestas Kulik <ekulik@redhat.com> - 1.1.4-1
+- Fix build failure with GCC 10
+
 * Wed Jul 24 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1.1.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
 
