@@ -48,11 +48,11 @@ logging.
 
 %build
 %cmake -DCMAKE_BUILD_TYPE=Release
-make %{?_smp_mflags}
+%make_build
 
 
 %install
-make install DESTDIR=%{buildroot}
+%make_install
 
 %files
 %doc README AUTHORS
