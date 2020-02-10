@@ -1,4 +1,4 @@
-%global commit ee2f49bd058d87c5ebd66fddc3c6d4aecdb50170
+%global commit 7b2a3a1b8884ab08fe4cc7737de7f9f45d8f24f1
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:          abrt-java-connector
