@@ -1,8 +1,8 @@
-%global commit 7b2a3a1b8884ab08fe4cc7737de7f9f45d8f24f1
+%global commit bef7e39ce5fdc4a8a620d56be186d4463ed761a8
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:          abrt-java-connector
-Version:       1.1.4
+Version:       1.1.5
 Release:       1%{?dist}
 Summary:       JNI Agent library converting Java exceptions to ABRT problems
 
@@ -11,15 +11,14 @@ License:       GPLv2+
 URL:           https://github.com/abrt/abrt-java-connector
 Source0:       https://github.com/abrt/%{name}/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
 
-BuildRequires: abrt-devel
+BuildRequires: pkgconfig(abrt) >= 2.14.1
 BuildRequires: check-devel
 BuildRequires: cmake
 BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: gettext
-BuildRequires: git-core
 BuildRequires: java-devel
-BuildRequires: libreport-devel
+BuildRequires: pkgconfig(libreport) >= 2.13.0
 BuildRequires: rpm-devel
 BuildRequires: satyr-devel
 BuildRequires: systemd-devel
@@ -94,6 +93,9 @@ make test || {
 
 
 %changelog
+* Tue May 12 2020 Packit Service <user-cont-team+packit-service@redhat.com> - 1.1.5-1
+- new upstream release: 1.1.5
+
 * Fri Feb 07 2020 Ernestas Kulik <ekulik@redhat.com> - 1.1.4-1
 - Fix build failure with GCC 10
 
