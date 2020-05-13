@@ -2,7 +2,7 @@
 %global commit bef7e39ce5fdc4a8a620d56be186d4463ed761a8
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
-Name:          1.1.5java-connector
+Name:          abrt-java-connector
 Version:       1.1.5
 Release:       1%{?dist}
 Summary:       JNI Agent library converting Java exceptions to ABRT problems
