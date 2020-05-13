@@ -93,6 +93,9 @@ make test || {
 
 
 %changelog
+* Wed May 13 2020 Ernestas Kulik <ekulik@redhat.com> - 1.1.5-1
+- new upstream release: 1.1.5
+
 * Tue May 12 2020 Packit Service <user-cont-team+packit-service@redhat.com> - 1.1.5-1
 - new upstream release: 1.1.5
 
