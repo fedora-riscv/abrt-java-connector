@@ -4,7 +4,7 @@
 
 Name:          abrt-java-connector
 Version:       1.1.5
-Release:       2%{?dist}
+Release:       3%{?dist}
 Summary:       JNI Agent library converting Java exceptions to ABRT problems
 
 Group:         System Environment/Libraries
@@ -16,13 +16,15 @@ Source0:       %{url}/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
 Source0:       %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 %endif
 
+Patch0001:     Adapt-to-different-exception-messages-in-Java-11.patch
+
 BuildRequires: pkgconfig(abrt) >= 2.14.1
 BuildRequires: check-devel
 BuildRequires: cmake
 BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: gettext
-BuildRequires: java-devel
+BuildRequires: java-devel >= 11
 BuildRequires: pkgconfig(libreport) >= 2.13.0
 BuildRequires: rpm-devel
 BuildRequires: satyr-devel
@@ -102,6 +104,9 @@ make test || {
 
 
 %changelog
+* Wed Jun 10 2020 Ernestas Kulik <ekulik@redhat.com> - 1.1.5-3
+- Add patch for Java 11 compatibility
+
 * Wed May 13 2020 Michal Fabik <mfabik@redhat.com> - 1.1.5-1
 - new upstream release: 1.1.5
 
