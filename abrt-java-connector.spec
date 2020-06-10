@@ -50,9 +50,9 @@ logging.
 
 %prep
 %if 0%{?snapshot}
-%autosetup -n %{name}-%{commit}
+%autosetup -n %{name}-%{commit} -S git
 %else
-%autosetup
+%autosetup -S git
 %endif
 
 
