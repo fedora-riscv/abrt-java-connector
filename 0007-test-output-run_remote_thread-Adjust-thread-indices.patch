@@ -1,0 +1,36 @@
+From c33aab10b138056be8ba7ea87f9d8ccd69bbc113 Mon Sep 17 00:00:00 2001
+From: Ernestas Kulik <ekulik@redhat.com>
+Date: Wed, 10 Jun 2020 09:08:57 +0200
+Subject: [PATCH 7/8] test: output: run_remote_thread: Adjust thread indices
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+I don’t know, seems that now the code starts only three, instead of
+five, as intended.
+---
+ test/outputs/run_remote_thread.log.in | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/test/outputs/run_remote_thread.log.in b/test/outputs/run_remote_thread.log.in
+index a871ad0..4acfea7 100644
+--- a/test/outputs/run_remote_thread.log.in
++++ b/test/outputs/run_remote_thread.log.in
+@@ -1,12 +1,12 @@
+ Caught exception java.lang.ArrayIndexOutOfBoundsException in method SimpleTest.throwIndexOutOfBoundsException()
+-Exception in thread "Thread-3" java.lang.ArrayIndexOutOfBoundsException: Index 42 out of bounds for length 10
++Exception in thread "Thread-1" java.lang.ArrayIndexOutOfBoundsException: Index 42 out of bounds for length 10
+ 	at SimpleTest.throwIndexOutOfBoundsException(SimpleTest.java:24) [jar:http://localhost:54321/JarTest.jar!/SimpleTest.class]
+ 	at SimpleTest.catchIndexOutOfBoundsException(SimpleTest.java:47) [jar:http://localhost:54321/JarTest.jar!/SimpleTest.class]
+ 	at SimpleTest.throwAndCatchAllExceptions(SimpleTest.java:61) [jar:http://localhost:54321/JarTest.jar!/SimpleTest.class]
+ 	at ThreadCaughtException.run(ThreadCaughtException.java:7) [jar:http://localhost:54321/JarTest.jar!/ThreadCaughtException.class]
+ executable: http://localhost:54321/JarTest.jar
+ Uncaught exception java.lang.NullPointerException in method SimpleTest.throwNullPointerException()
+-Exception in thread "Thread-4" java.lang.NullPointerException
++Exception in thread "Thread-2" java.lang.NullPointerException
+ 	at SimpleTest.throwNullPointerException(SimpleTest.java:36) [jar:http://localhost:54321/JarTest.jar!/SimpleTest.class]
+ 	at SimpleTest.throwAndDontCatchException(SimpleTest.java:71) [jar:http://localhost:54321/JarTest.jar!/SimpleTest.class]
+ 	at ThreadUncaughtException.run(ThreadUncaughtException.java:7) [jar:http://localhost:54321/JarTest.jar!/ThreadUncaughtException.class]
+-- 
+2.26.2
+

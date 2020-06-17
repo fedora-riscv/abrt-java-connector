@@ -1,0 +1,58 @@
+From e5ccad0135e7c07aeb329e76101e2b666202a7d7 Mon Sep 17 00:00:00 2001
+From: Ernestas Kulik <ekulik@redhat.com>
+Date: Wed, 10 Jun 2020 07:23:52 +0200
+Subject: [PATCH 3/8] Add indices to out-of-bounds exception output files
+
+Some things missed in 9629e6cc1aa0ca2d04a387efb432d0daee0e4ec4.
+---
+ test/outputs/backtrace_not_reportable_1remote_class.log.in   | 2 +-
+ test/outputs/backtrace_not_reportable_3remote_classes.log.in | 2 +-
+ test/outputs/run_remote_thread.log.in                        | 2 +-
+ test/outputs/run_threads.log.in                              | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/test/outputs/backtrace_not_reportable_1remote_class.log.in b/test/outputs/backtrace_not_reportable_1remote_class.log.in
+index 5555da5..4f5b3a9 100644
+--- a/test/outputs/backtrace_not_reportable_1remote_class.log.in
++++ b/test/outputs/backtrace_not_reportable_1remote_class.log.in
+@@ -1,4 +1,4 @@
+-Exception in thread "Thread-3" java.lang.ArrayIndexOutOfBoundsException: 42
++Exception in thread "Thread-3" java.lang.ArrayIndexOutOfBoundsException: Index 42 out of bounds for length 10
+ >---at SimpleTest.throwIndexOutOfBoundsException(SimpleTest.java:24) [jar:http://localhost:54321/JarTest.jar!/SimpleTest.class]
+ >---at SimpleTest.catchIndexOutOfBoundsException(SimpleTest.java:47) [jar:http://localhost:54321/JarTest.jar!/SimpleTest.class]
+ >---at SimpleTest.throwAndCatchAllExceptions(SimpleTest.java:61) [jar:http://localhost:54321/JarTest.jar!/SimpleTest.class]
+diff --git a/test/outputs/backtrace_not_reportable_3remote_classes.log.in b/test/outputs/backtrace_not_reportable_3remote_classes.log.in
+index 77fb989..4a32656 100644
+--- a/test/outputs/backtrace_not_reportable_3remote_classes.log.in
++++ b/test/outputs/backtrace_not_reportable_3remote_classes.log.in
+@@ -1,4 +1,4 @@
+-Exception in thread "Thread-3" java.lang.ArrayIndexOutOfBoundsException: 42
++Exception in thread "Thread-3" java.lang.ArrayIndexOutOfBoundsException: Index 42 out of bounds for length 10
+ >---at SimpleTest.throwIndexOutOfBoundsException(SimpleTest.java:24) [jar:http://localhost:54321/JarTest.jar!/SimpleTest.class]
+ >---at SimpleTest.catchIndexOutOfBoundsException(SimpleTest.java:47) [jar:http://localhost:321/JarTest.jar!/SimpleTest.class]
+ >---at SimpleTest.throwAndCatchAllExceptions(SimpleTest.java:61) [jar:http://localhost:4321/JarTest.jar!/SimpleTest.class]
+diff --git a/test/outputs/run_remote_thread.log.in b/test/outputs/run_remote_thread.log.in
+index ecca10e..a871ad0 100644
+--- a/test/outputs/run_remote_thread.log.in
++++ b/test/outputs/run_remote_thread.log.in
+@@ -1,5 +1,5 @@
+ Caught exception java.lang.ArrayIndexOutOfBoundsException in method SimpleTest.throwIndexOutOfBoundsException()
+-Exception in thread "Thread-3" java.lang.ArrayIndexOutOfBoundsException: 42
++Exception in thread "Thread-3" java.lang.ArrayIndexOutOfBoundsException: Index 42 out of bounds for length 10
+ 	at SimpleTest.throwIndexOutOfBoundsException(SimpleTest.java:24) [jar:http://localhost:54321/JarTest.jar!/SimpleTest.class]
+ 	at SimpleTest.catchIndexOutOfBoundsException(SimpleTest.java:47) [jar:http://localhost:54321/JarTest.jar!/SimpleTest.class]
+ 	at SimpleTest.throwAndCatchAllExceptions(SimpleTest.java:61) [jar:http://localhost:54321/JarTest.jar!/SimpleTest.class]
+diff --git a/test/outputs/run_threads.log.in b/test/outputs/run_threads.log.in
+index b9089b7..04c5b35 100644
+--- a/test/outputs/run_threads.log.in
++++ b/test/outputs/run_threads.log.in
+@@ -1,5 +1,5 @@
+ Caught exception java.lang.ArrayIndexOutOfBoundsException in method SimpleTest.throwIndexOutOfBoundsException()
+-Exception in thread "Thread-0" java.lang.ArrayIndexOutOfBoundsException: 42
++Exception in thread "Thread-0" java.lang.ArrayIndexOutOfBoundsException: Index 42 out of bounds for length 10
+ 	at SimpleTest.throwIndexOutOfBoundsException(SimpleTest.java:24) [file:@CMAKE_BINARY_DIR@/test/SimpleTest.class]
+ 	at SimpleTest.catchIndexOutOfBoundsException(SimpleTest.java:47) [file:@CMAKE_BINARY_DIR@/test/SimpleTest.class]
+ 	at SimpleTest.throwAndCatchAllExceptions(SimpleTest.java:61) [file:@CMAKE_BINARY_DIR@/test/SimpleTest.class]
+-- 
+2.26.2
+

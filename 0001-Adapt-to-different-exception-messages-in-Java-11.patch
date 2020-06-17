@@ -1,7 +1,7 @@
 From 9629e6cc1aa0ca2d04a387efb432d0daee0e4ec4 Mon Sep 17 00:00:00 2001
 From: Ernestas Kulik <ekulik@redhat.com>
 Date: Wed, 10 Jun 2020 07:03:43 +0200
-Subject: [PATCH] Adapt to different exception messages in Java 11
+Subject: [PATCH 1/8] Adapt to different exception messages in Java 11
 
 Out-of-bounds exceptions now additionally spit out the length of the
 container.

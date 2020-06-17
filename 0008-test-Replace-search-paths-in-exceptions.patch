@@ -1,0 +1,43 @@
+From 306a56211556a5683f9a2d5a1356c41ab8d27200 Mon Sep 17 00:00:00 2001
+From: Ernestas Kulik <ekulik@redhat.com>
+Date: Wed, 17 Jun 2020 09:05:13 +0200
+Subject: [PATCH 8/8] test: Replace search paths in exceptions
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Those we cannot predict ahead of time, so let’s use some substitution
+magic.
+---
+ test/outputs/run_test.log.in | 2 +-
+ test/testdriver              | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/test/outputs/run_test.log.in b/test/outputs/run_test.log.in
+index ae4a894..f3898fd 100644
+--- a/test/outputs/run_test.log.in
++++ b/test/outputs/run_test.log.in
+@@ -138,7 +138,7 @@ Exception in thread "main" java.lang.UnsatisfiedLinkError: Expecting an absolute
+ 	at Test.main(Test.java:515) [file:@CMAKE_BINARY_DIR@/test/Test.class]
+ executable: @CMAKE_BINARY_DIR@/test/Test.class
+ Caught exception java.lang.UnsatisfiedLinkError in method java.lang.ClassLoader.loadLibrary()
+-Exception in thread "main" java.lang.UnsatisfiedLinkError: no xyzzy in java.library.path
++Exception in thread "main" java.lang.UnsatisfiedLinkError: no xyzzy in java.library.path: [PATHS]
+ 	at java.base/java.lang.ClassLoader.loadLibrary(ClassLoader.java:LINENO) [jrt:/java.base/java/lang/ClassLoader.class]
+ 	at java.base/java.lang.Runtime.loadLibrary0(Runtime.java:LINENO) [jrt:/java.base/java/lang/Runtime.class]
+ 	at java.base/java.lang.System.loadLibrary(System.java:LINENO) [jrt:/java.base/java/lang/System.class]
+diff --git a/test/testdriver b/test/testdriver
+index ff71685..29aa44f 100644
+--- a/test/testdriver
++++ b/test/testdriver
+@@ -30,6 +30,7 @@ else
+ fi
+ 
+ sed -i "s/\(\.java:\)[0-9]\+\() \[jrt:.*\]\)/\1LINENO\2/" $TMP_RESULT
++sed -i 's/\(no .* in java\.library\.path: \)\[.*\]/\1[PATHS]/' $TMP_RESULT
+ 
+ diff -u $3 $TMP_RESULT
+ EC=$?
+-- 
+2.26.2
+

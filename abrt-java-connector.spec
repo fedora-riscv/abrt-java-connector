@@ -4,7 +4,7 @@
 
 Name:          abrt-java-connector
 Version:       1.1.5
-Release:       3%{?dist}
+Release:       4%{?dist}
 Summary:       JNI Agent library converting Java exceptions to ABRT problems
 
 Group:         System Environment/Libraries
@@ -16,7 +16,14 @@ Source0:       %{url}/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
 Source0:       %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 %endif
 
-Patch0001:     Adapt-to-different-exception-messages-in-Java-11.patch
+Patch0001:     0001-Adapt-to-different-exception-messages-in-Java-11.patch
+Patch0002:     0002-Drop-unused-test-output-files.patch
+Patch0003:     0003-Add-indices-to-out-of-bounds-exception-output-files.patch
+Patch0004:     0004-test-bad_class-Adapt-output-to-Java-11.patch
+Patch0005:     0005-Adapt-more-test-ouput-to-Java-11.patch
+Patch0006:     0006-test-RemoteTest-Don-t-call-URLClassLoader.addURL.patch
+Patch0007:     0007-test-output-run_remote_thread-Adjust-thread-indices.patch
+Patch0008:     0008-test-Replace-search-paths-in-exceptions.patch
 
 BuildRequires: pkgconfig(abrt) >= 2.14.1
 BuildRequires: check-devel
@@ -104,6 +111,9 @@ make test || {
 
 
 %changelog
+* Wed Jun 17 2020 Ernestas Kulik <ekulik@redhat.com> - 1.1.5-4
+- Add more patches for Java 11 compatibility
+
 * Wed Jun 10 2020 Ernestas Kulik <ekulik@redhat.com> - 1.1.5-3
 - Add patch for Java 11 compatibility
 
