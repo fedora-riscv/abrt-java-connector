@@ -31,6 +31,7 @@ BuildRequires: cmake
 BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: gettext
+BuildRequires: git-core
 BuildRequires: java-devel >= 11
 BuildRequires: pkgconfig(libreport) >= 2.13.0
 BuildRequires: rpm-devel
