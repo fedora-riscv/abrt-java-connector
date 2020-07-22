@@ -112,7 +112,7 @@ make test || {
 
 
 %changelog
-* Thu Jul 22 2020 - Ernestas Kulik <ekulik@redhat.com> - 1.1.5-6
+* Wed Jul 22 2020 - Ernestas Kulik <ekulik@redhat.com> - 1.1.5-6
 - Fix non-srcdir CMake build
 
 * Fri Jul 10 2020 Jiri Vanek <jvanek@redhat.com> - 1.1.5-5
