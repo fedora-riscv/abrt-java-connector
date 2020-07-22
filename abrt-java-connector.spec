@@ -4,7 +4,7 @@
 
 Name:          abrt-java-connector
 Version:       1.1.5
-Release:       5%{?dist}
+Release:       6%{?dist}
 Summary:       JNI Agent library converting Java exceptions to ABRT problems
 
 Group:         System Environment/Libraries
@@ -66,11 +66,11 @@ logging.
 
 %build
 %cmake -DCMAKE_BUILD_TYPE=Release
-%make_build
+%cmake_build
 
 
 %install
-%make_install
+%cmake_install
 
 %files
 %doc README AUTHORS
@@ -112,6 +112,9 @@ make test || {
 
 
 %changelog
+* Thu Jul 22 2020 - Ernestas Kulik <ekulik@redhat.com> - 1.1.5-6
+- Fix non-srcdir CMake build
+
 * Fri Jul 10 2020 Jiri Vanek <jvanek@redhat.com> - 1.1.5-5
 - Rebuilt for JDK-11, see https://fedoraproject.org/wiki/Changes/Java11
 
