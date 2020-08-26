@@ -3,8 +3,8 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:          abrt-java-connector
-Version:       1.1.5
-Release:       8%{?dist}
+Version:       1.2.0
+Release:       1%{?dist}
 Summary:       JNI Agent library converting Java exceptions to ABRT problems
 
 Group:         System Environment/Libraries
@@ -16,24 +16,15 @@ Source0:       %{url}/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
 Source0:       %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 %endif
 
-Patch0001:     0001-Adapt-to-different-exception-messages-in-Java-11.patch
-Patch0002:     0002-Drop-unused-test-output-files.patch
-Patch0003:     0003-Add-indices-to-out-of-bounds-exception-output-files.patch
-Patch0004:     0004-test-bad_class-Adapt-output-to-Java-11.patch
-Patch0005:     0005-Adapt-more-test-ouput-to-Java-11.patch
-Patch0006:     0006-test-RemoteTest-Don-t-call-URLClassLoader.addURL.patch
-Patch0007:     0007-test-output-run_remote_thread-Adjust-thread-indices.patch
-Patch0008:     0008-test-Replace-search-paths-in-exceptions.patch
-
 BuildRequires: pkgconfig(abrt) >= 2.14.1
 BuildRequires: check-devel
 BuildRequires: cmake
 BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: gettext
-BuildRequires: git-core
-BuildRequires: java-devel >= 11
-BuildRequires: pkgconfig(libreport) >= 2.13.0
+# Tests have been redone to work under Java 11, but they are not backwards-compatible.
+BuildRequires: java-11-devel
+BuildRequires: pkgconfig(libreport) >= 2.14.0
 BuildRequires: rpm-devel
 BuildRequires: satyr-devel
 BuildRequires: systemd-devel
@@ -58,9 +49,9 @@ logging.
 
 %prep
 %if 0%{?snapshot}
-%autosetup -n %{name}-%{commit} -S git
+%autosetup -n %{name}-%{commit}
 %else
-%autosetup -S git
+%autosetup
 %endif
 
 
@@ -112,6 +103,9 @@ make test || {
 
 
 %changelog
+* Wed Aug 26 2020 rebase-helper <rebase-helper@localhost.local> - 1.2.0-1
+- new upstream release: 1.2.0
+
 * Fri Jul 31 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1.1.5-8
 - Second attempt - Rebuilt for
   https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
