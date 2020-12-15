@@ -28,6 +28,7 @@ BuildRequires: pkgconfig(libreport) >= 2.14.0
 BuildRequires: rpm-devel
 BuildRequires: satyr-devel
 BuildRequires: systemd-devel
+BuildRequires: make
 
 Requires:      abrt
 
