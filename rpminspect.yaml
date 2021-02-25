@@ -1,0 +1,4 @@
+# completely disabled inspections:
+inspections:
+    # we know about our patches, no need to report anything
+    patches: off
