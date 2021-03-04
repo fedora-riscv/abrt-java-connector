@@ -7,6 +7,7 @@ rules:
   - !PassingTestCaseRule {test_case_name: fedora-ci.koji-build.rpmdeplint.functional}
   - !PassingTestCaseRule {test_case_name: fedora-ci.koji-build.rpminspect.static-analysis}
   - !PassingTestCaseRule {test_case_name: fedora-ci.koji-build.installability.functional}
+  - !PassingTestCaseRule {test_case_name: fedora-ci.koji-build.tier0.functional}
 
 --- !Policy
 product_versions:
@@ -17,4 +18,5 @@ rules:
   - !PassingTestCaseRule {test_case_name: fedora-ci.koji-build.rpmdeplint.functional}
   - !PassingTestCaseRule {test_case_name: fedora-ci.koji-build.rpminspect.static-analysis}
   - !PassingTestCaseRule {test_case_name: fedora-ci.koji-build.installability.functional}
+  - !PassingTestCaseRule {test_case_name: fedora-ci.koji-build.tier0.functional}
 
