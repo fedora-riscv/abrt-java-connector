@@ -1,20 +1,12 @@
-%global snapshot 0
-%global commit bef7e39ce5fdc4a8a620d56be186d4463ed761a8
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
-
 Name:          abrt-java-connector
-Version:       1.2.0
-Release:       8%{?dist}
+Version:       1.3.0
+Release:       1%{?dist}
 Summary:       JNI Agent library converting Java exceptions to ABRT problems
 
 Group:         System Environment/Libraries
 License:       GPLv2+
 URL:           https://github.com/abrt/abrt-java-connector
-%if 0%{?snapshot}
-Source0:       %{url}/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
-%else
 Source0:       %{url}/archive/%{version}/%{name}-%{version}.tar.gz
-%endif
 
 BuildRequires: pkgconfig(abrt) >= 2.14.1
 BuildRequires: check-devel
@@ -24,11 +16,11 @@ BuildRequires: gcc-c++
 BuildRequires: gettext
 # Tests have been redone to work under Java 11, but they are not backwards-compatible.
 BuildRequires: java-11-devel
+BuildRequires: make
 BuildRequires: pkgconfig(libreport) >= 2.14.0
 BuildRequires: rpm-devel
 BuildRequires: satyr-devel
 BuildRequires: systemd-devel
-BuildRequires: make
 
 Requires:      abrt
 
@@ -49,11 +41,7 @@ This package contains only minimal set of files needed for container exception
 logging.
 
 %prep
-%if 0%{?snapshot}
-%autosetup -n %{name}-%{commit}
-%else
-%autosetup
-%endif
+%autosetup -n %{name}-%{version}
 
 
 %build
@@ -61,8 +49,13 @@ logging.
 %cmake_build
 
 
+%check
+%ctest
+
+
 %install
 %cmake_install
+
 
 %files
 %doc README AUTHORS
@@ -96,14 +89,11 @@ logging.
 %{_prefix}/lib/abrt-java-connector
 
 
-%check
-make test || {
-    cat Testing/Temporary/LastTest.log
-    exit 1
-}
-
-
 %changelog
+* Mon Jan 17 2022 Matěj Grabovský <mgrabovs@redhat.com> 1.3.0-1
+- Bump libreport dependency to 2.14.0
+- Add make to build-time dependencies
+
 * Wed Jul 21 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1.2.0-8
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
 
