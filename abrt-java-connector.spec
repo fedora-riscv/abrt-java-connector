@@ -1,6 +1,6 @@
 Name:          abrt-java-connector
 Version:       1.3.0
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       JNI Agent library converting Java exceptions to ABRT problems
 
 Group:         System Environment/Libraries
@@ -49,15 +49,16 @@ logging.
 %cmake_build
 
 
+%install
+%cmake_install
+
+
 %check
 cd "%{__cmake_builddir}"
 # Force serial execution of tests to prevent process interleaving which seems to
 # upset abrt-java-connector.
 %{__ctest} --output-on-failure -j1
 cd -
-
-%install
-%cmake_install
 
 
 %files
@@ -93,6 +94,9 @@ cd -
 
 
 %changelog
+* Tue Jan 18 2022 Matěj Grabovský <mgrabovs@redhat.com> - 1.3.0-2
+- Fix failing tests
+
 * Mon Jan 17 2022 Matěj Grabovský <mgrabovs@redhat.com> 1.3.0-1
 - Bump libreport dependency to 2.14.0
 - Add make to build-time dependencies
