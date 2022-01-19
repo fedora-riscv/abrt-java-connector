@@ -1,3 +1,10 @@
 summary: Basic smoke test for abrt-java-connector
+prepare:
+    how: install
+    # Do not attempt to install conflicting subpackages.
+    exclude:
+        - abrt-atomic
+        - abrt-java-connector-container
+        - python3-abrt-container-addon
 execute:
     script: abrt-action-analyze-java --help
