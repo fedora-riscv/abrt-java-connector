@@ -1,6 +1,6 @@
 Name:          abrt-java-connector
 Version:       1.3.1
-Release:       2%{?dist}
+Release:       3%{?dist}
 Summary:       JNI Agent library converting Java exceptions to ABRT problems
 
 Group:         System Environment/Libraries
@@ -94,6 +94,9 @@ cd -
 
 
 %changelog
+* Wed Jan 19 2022 Fedora Release Engineering <releng@fedoraproject.org> - 1.3.1-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
+
 * Wed Jan 19 2022 Matěj Grabovský <mgrabovs@redhat.com> - 1.3.1-2
 - Rebuild for testing
 
