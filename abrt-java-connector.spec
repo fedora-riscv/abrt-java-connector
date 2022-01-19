@@ -1,6 +1,6 @@
 Name:          abrt-java-connector
 Version:       1.3.1
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       JNI Agent library converting Java exceptions to ABRT problems
 
 Group:         System Environment/Libraries
@@ -94,6 +94,9 @@ cd -
 
 
 %changelog
+* Wed Jan 19 2022 Matěj Grabovský <mgrabovs@redhat.com> - 1.3.1-2
+- Rebuild for testing
+
 * Wed Jan 19 2022 Matěj Grabovský <mgrabovs@redhat.com> - 1.3.1-1
 - New upstream release
 
